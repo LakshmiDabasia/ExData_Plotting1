@@ -7,8 +7,7 @@ HPCData <- read.csv("~/exdata_data_household_power_consumption/household_power_c
 #Clean, format and subset data to relevant set
 HPC<-HPCData
 library(chron)
-HPC$Date<-as.POSIXct(HPC$Date, format="%d/%m/%Y")
-HPC$Date<-as.Date(HPC$Date)
+HPC$Date<-as.Date(HPC$Date, format="%d/%m/%Y")
 HPC$Time<-chron(times=HPC$Time)
 data<-subset(HPC, HPC$Date=="2007-02-01" | HPC$Date=="2007-02-02")
 data$datetime <- with(data, paste(Date, Time))
@@ -16,6 +15,7 @@ data$datetime <- as.POSIXct(data$datetime)
 
 #prepare plot2 data
 data<-data[!is.na(data["Global_active_power"]),]
+data$Global_active_power<-as.numeric(as.character(data$Global_active_power))
 
 #create plot2 as png
 png("plot2.png", width=480, height = 480, units = "px")

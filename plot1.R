@@ -7,17 +7,16 @@ HPCData <- read.csv("~/exdata_data_household_power_consumption/household_power_c
 #Clean, format and subset data to relevant set
 HPC<-HPCData
 library(chron)
-HPC$Date<-as.POSIXct(HPC$Date, format="%d/%m/%Y")
-HPC$Date<-as.Date(HPC$Date)
+HPC$Date<-as.Date(HPC$Date, format="%d/%m/%Y")
 HPC$Time<-chron(times=HPC$Time)
 data<-subset(HPC, HPC$Date=="2007-02-01" | HPC$Date=="2007-02-02")
 data$datetime <- with(data, paste(Date, Time))
 data$datetime <- as.POSIXct(data$datetime)
 
 #prepare plot1 data
-data$Global_active_power<-as.numeric(data$Global_active_power)
+data$Global_active_power<-as.numeric(as.character(data$Global_active_power))
 
 #create plot1 as png
 png("plot1.png", width=480, height = 480, units = "px")
-hist(data$Global_active_power, breaks=14, main = "Global Active Power", col ="red", xlab = "Global Active Power (kilowatts)")
+hist(data$Global_active_power, breaks=13, main = "Global Active Power", col ="red", xlab = "Global Active Power (kilowatts)")
 dev.off()

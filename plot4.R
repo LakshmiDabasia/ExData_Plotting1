@@ -7,19 +7,18 @@ HPCData <- read.csv("~/exdata_data_household_power_consumption/household_power_c
 #Clean, format and subset data to relevant set
 HPC<-HPCData
 library(chron)
-HPC$Date<-as.POSIXct(HPC$Date, format="%d/%m/%Y")
-HPC$Date<-as.Date(HPC$Date)
+HPC$Date<-as.Date(HPC$Date, format="%d/%m/%Y")
 HPC$Time<-chron(times=HPC$Time)
 data<-subset(HPC, HPC$Date=="2007-02-01" | HPC$Date=="2007-02-02")
 data$datetime <- with(data, paste(Date, Time))
 data$datetime <- as.POSIXct(data$datetime)
 
 #prepare data
-data$Global_active_power<-as.numeric(data$Global_active_power)
-data$Sub_metering_1<-as.numeric(data$Sub_metering_1)
-data$Sub_metering_2<-as.numeric(data$Sub_metering_2)
-data$Sub_metering_3<-as.numeric(data$Sub_metering_3)
-data$Global_reactive_power<-as.numeric(data$Global_reactive_power)
+data$Global_active_power<-as.numeric(as.character(data$Global_active_power))
+data$Sub_metering_1<-as.numeric(as.character(data$Sub_metering_1))
+data$Sub_metering_2<-as.numeric(as.character(data$Sub_metering_2))
+data$Sub_metering_3<-as.numeric(as.character(data$Sub_metering_3))
+data$Global_reactive_power<-as.numeric(as.character(data$Global_reactive_power))
 
 
 #create plot4 as png
